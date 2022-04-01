@@ -1,0 +1,74 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.JobAds.EditVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit Ad";
+}
+
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Пормени обява</h1>
+</div>
+<hr />
+<fieldset>
+    <form action="/JobAd/Edit" method="post">
+        @Html.HiddenFor(m => m.OwnerId)
+        @Html.HiddenFor(m => m.Id)
+        <div class="grid">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Title)
+                </div>
+
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Title)
+                </div>
+
+                <div class="col-2">
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Description)
+                </div>
+                <div class="col-2">
+                    @Html.TextAreaFor(m => m.Description)
+                </div>
+                <div class="col-2">
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.CategoryId)
+                </div>
+                <select asp-for="CategoryId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.ListofCategory, "Id", "CategoryName"))">
+                </select>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.CategoryId)
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-2">
+                    @Html.ValidationMessage("summaryError")
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div calss="col-2">
+                    <input type="submit" class="right" value="Запази" />
+                    <a href="/JobAd/Index">Назад</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</fieldset>

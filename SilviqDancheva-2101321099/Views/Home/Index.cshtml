@@ -1,0 +1,14 @@
+﻿@using SilviqDancheva_2101321099.Entities;
+@using SilviqDancheva_2101321099.ExtentionMethods;
+@{
+    User loggedUser = this.ViewContext.HttpContext.Session.GetObject<User>("loggedUser");
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home Page";
+}
+
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Добре дошли,</h1>
+    <h2> @(loggedUser == null? "Моля, влезте във Вашия профил, за да разглезате обявите за работа" : loggedUser.Username + '!')</h2>
+</div>
+<hr />

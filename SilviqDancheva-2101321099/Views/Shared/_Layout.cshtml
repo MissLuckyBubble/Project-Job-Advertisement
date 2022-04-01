@@ -1,0 +1,44 @@
+﻿@using SilviqDancheva_2101321099.Entities;
+@using SilviqDancheva_2101321099.ExtentionMethods;
+@{
+    User loggedUser = this.ViewContext.HttpContext.Session.GetObject<User>("loggedUser");
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/app.js" asp-append-version="true"></script>
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - SilviqDancheva_2101321099</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <ul class="menu">
+                <li><a href="/Home/Index">Начало</a></li>
+                @if (loggedUser == null)
+                {
+                    <li><a href="/Home/Login">Вход</a></li>
+                    <li><a href="/Users/Register">Регистрация</a></li>
+                }
+                else
+                {
+                    <li><a href="/JobAd/Index">Обяви</a></li>
+                    <li><a href="/Home/Logout">Изход</a></li>
+                    <li><a href="/Users/Profile?Id=@loggedUser.Id">Профил</a></li>
+                }
+            </ul>
+        </div>
+    </header>
+
+    <footer class="footer" style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: #ffbead; color: black; text-align: center; ">
+        &copy; 2022 - SilviqDancheva_2101321099 - Проект по Уеб Програмиране 2
+    </footer>
+    <div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>

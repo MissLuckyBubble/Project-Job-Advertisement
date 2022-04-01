@@ -1,0 +1,34 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.JobAds.IndexVM
+@using SilviqDancheva_2101321099.Entities
+@using SilviqDancheva_2101321099.ExtentionMethods;
+@{
+    User loggedUser = this.ViewContext.HttpContext.Session.GetObject<User>("loggedUser");
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Users apllayed to job";
+}
+
+<hr />
+<div class="row"><a href="/JobAd/Index">Назад към всички обяви</a></div>
+<hr />
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Кандидаствания за обява:</h1>
+</div>
+<div class="col-3-lg">Заглавие: @Model.JobAd.Title</div>
+<div class="col-3-lg">Създател: @Model.JobAd.Owner.FirstName (@Model.JobAd.Owner.Username)</div>
+<div class="col-3-lg">Описание: @Model.JobAd.Description </div>
+<div class="col-3-lg">Категория: @Model.JobAd.Category.CategoryName </div>
+<hr />
+<article class="objects">
+    @if (@Model.Users.Count != 0)
+        @foreach (User user in Model.Users)
+        {
+            <article class="object">
+                <div class="col-3-lg">Име: @user.FirstName</div>
+                <div class="col-3-lg">Фамилия: @user.FirstName</div>
+                <div class="col-3-lg">Потребителско име: @user.Username</div>
+            </article>
+        }
+        else
+        {<div class="row">Все още няма кандидатури за тази обява!</div>}
+</article>

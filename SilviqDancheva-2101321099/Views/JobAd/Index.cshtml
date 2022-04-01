@@ -1,0 +1,138 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.JobAds.IndexVM
+@using SilviqDancheva_2101321099.Entities
+@using SilviqDancheva_2101321099.ExtentionMethods;
+@{
+    User loggedUser = this.ViewContext.HttpContext.Session.GetObject<User>("loggedUser");
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "JobAds";
+}
+
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Обяви за работа</h1>
+</div>
+<hr />
+
+@if (loggedUser.RoleId == 1)
+{
+    <div class="row"><a href="/JobAd/Create">Добави нова</a></div>
+}
+else
+{
+    <div class="row"><a href="/JobAd/Applayed">Моите кандидаствания</a></div>
+}
+<hr />
+<form class="filter" action="/JobAd/Index" method="get">
+    <div class="text-center">
+        <h4>Търсене</h4>
+    </div>
+    @Html.HiddenFor(m => m.Pager.ItemsPerPage)
+    <div class="grid">
+        <div class="row">
+            <div class="col-1">
+                @Html.LabelFor(m => m.Filter.Title)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Title)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                @Html.LabelFor(m => m.Filter.Description)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Description)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                @Html.LabelFor(m => m.Filter.Owner)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Owner)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                @Html.LabelFor(m => m.Filter.CategoryId)
+            </div>
+            <div class="col-2">
+                @Html.DropDownListFor(m => m.Filter.CategoryId, Model.Filter.ValidCategories, "Всички", null)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3"></div>
+            <div class=" col-1">
+                <input class="right" type="submit" value="Filter" />
+            </div>
+
+            <div class="col-2"><a class="right" href="/JobAd/Index">Изчисти</a></div>
+        </div>
+    </div>
+
+
+</form>
+<hr/>
+<div class="objects">
+    @foreach (JobAd item in Model.Items)
+    {
+        <article class="object">
+            <div class="col-3-lg">Заглавие: @item.Title</div>
+            <div class="col-3-lg">Създател: @item.Owner.FirstName (@item.Owner.Username)</div>
+            <div class="col-3-lg">Описание: @item.Description </div>
+            <div class="col-3-lg">Категория: @item.Category.CategoryName </div>
+
+            @if (loggedUser.RoleId == 1)
+            {
+                <div class="col-3-lg">
+                    <a href="/JobAd/UserApplayed?Id=@item.Id">Разгледай кандидатурите</a>
+                </div>
+
+                <div class="col-3-lg">
+                    <a href="/JobAd/Edit?Id=@item.Id">Редактирай</a> 
+                    <a href="/JobAd/Delete?Id=@item.Id" onclick="return confirm('Сигурни ли сте, че искате да изтриете този запис?');">Изтрий</a>
+                </div>
+
+            }
+            else
+            {
+                <a href="/JobAd/Applay?Id=@item.Id"> Кандидаствай</a>
+            }
+        </article>
+    }
+
+</div>
+<hr />
+<div class="pager">
+    @{
+        string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+        string action = this.ViewContext.RouteData.Values["action"].ToString();
+
+    }
+    <a>Страница: </a>
+    <div class="col-1" style="display:flex">
+        @for (int i = 0; i < Model.Pager.PagesCounter; i++)
+        {
+            <a href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage
+               &Filter.Title=@Model.Filter.Title&Filter.Description=@Model.Filter.Description&Filter.Owner=@Model.Filter.Owner&Filter.CategoryId=@Model.Filter.CategoryId">
+                @(i+1)
+            </a>
+        }
+    </div>
+
+    <script>
+            function ddlItemsPerPage_OnChange() {
+                let control = document.getElementById("ddlItemsPerPAge");
+                document.location.href = "/@controller/@action?Pager.Page=1&Pager.ItemsPerPage=" + control.value + "&Filter.Title=@Model.Filter.Title&Filter.Description=@Model.Filter.Description&Filter.Owner=@Model.Filter.Owner&Filter.CategoryId=@Model.Filter.CategoryId";
+            }
+    </script>
+    <a>Елеменети на страница: </a>
+    <select id="ddlItemsPerPAge" onchange="ddlItemsPerPage_OnChange()">
+        <option> </option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+    </select>
+</div>
+<hr />

@@ -1,0 +1,62 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.JobAds.IndexVM
+@using SilviqDancheva_2101321099.Entities
+@using SilviqDancheva_2101321099.ExtentionMethods;
+@{
+    User loggedUser = this.ViewContext.HttpContext.Session.GetObject<User>("loggedUser");
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Applayed Job Ads";
+}
+<hr />
+<div class="row"><a href="/JobAd/Index">Назад към Всички Обяви</a></div>
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Кандидаствания</h1>
+</div>
+<hr />
+<div class="objects">
+    @foreach (JobAd item in Model.Items)
+    {
+        <article class="object">
+            <div class="col-3-lg">Заглавие: @item.Title</div>
+            <div class="col-3-lg">Създател: @item.Owner.FirstName (@item.Owner.Username)</div>
+            <div class="col-3-lg">Описание: @item.Description </div>
+            <div class="col-3-lg">Категория: @item.Category.CategoryName </div>
+
+            <div class="col-3-lg">
+                <a href="/JobAd/CancelApplay?Id=@item.Id">Отказ</a>
+            </div>
+        </article>
+    }
+</div>
+<hr />
+<div class="pager">
+    @{
+        string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+        string action = this.ViewContext.RouteData.Values["action"].ToString();
+
+    }
+    <a>Страница: </a>
+    <div class="col-1" style="display:flex">
+        @for (int i = 0; i < Model.Pager.PagesCounter; i++)
+        {
+            <a href="/@controller/@action?Pager.Page=@(i+1)&Pager.ItemsPerPage=@Model.Pager.ItemsPerPage">
+                @(i+1)
+            </a>
+        }
+    </div>
+
+    <script>
+            function ddlItemsPerPage_OnChange() {
+                let control = document.getElementById("ddlItemsPerPAge");
+                document.location.href = "/@controller/@action?Pager.Page=1&Pager.ItemsPerPage=" + control.value;
+            }
+    </script>
+    <a>Елеменети на страница: </a>
+    <select id="ddlItemsPerPAge" onchange="ddlItemsPerPage_OnChange()">
+        <option> </option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+    </select>
+</div>
+<hr />

@@ -1,0 +1,41 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.Users.ProfileVM
+@using SilviqDancheva_2101321099.Entities
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "PROFILE";
+}
+
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Профил</h1>
+</div>
+<hr />
+<html>
+<body>
+    <fieldset>
+        <legend> Вашият Профил: </legend>
+        <hr />
+        <section class="object">
+            <div class="col-3-lg">
+                Потребителско име: @Model.User.Username
+            </div>
+            <div class="col-3-lg">
+                Име: @Model.User.FirstName
+            </div>
+            <div class="col-3-lg">
+                Фамилия: @Model.User.LastName
+            </div>
+            <div class="col-3-lg">
+                Роля: @Model.User.Role.RoleName
+            </div>
+            <div class="col-3-lg">
+                <a href="/Users/Edit?Id=@Model.User.Id">Редактирай този профил</a>
+            </div>
+            <div class="col-3-lg">
+                <a href="/Users/Delete?Id=@Model.User.Id" onclick="return confirm('Сигурни ли сте, че искате този профил да бъде изтрит?');">Изтрий този профил</a>
+
+            </div>
+        </section>
+    </fieldset>
+</body>
+</html>

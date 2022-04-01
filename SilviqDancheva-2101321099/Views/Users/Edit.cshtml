@@ -1,0 +1,79 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.Users.EditVM
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit";
+}
+
+
+<fieldset>
+    <legend> Редактирай своя профил: </legend>
+    <hr />
+    <form action="/Users/Edit" method="post">
+        <div class="grid">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(r => r.RoleId)
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Username)
+                </div>
+
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Username)
+                </div>
+
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="col-2">
+                    @Html.PasswordFor(m => m.Password)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-1">
+                    @Html.LabelFor(m => m.FirstName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.FirstName)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.LastName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.LastName)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div calss="col-2">
+
+                    <input type="submit" class="right" value="SAVE" />
+                </div>
+            </div>
+            <div class="row">
+                <a href="/Users/Profile?Id=@Model.Id">Back</a>
+            </div>
+        </div>
+
+    </form>
+</fieldset>

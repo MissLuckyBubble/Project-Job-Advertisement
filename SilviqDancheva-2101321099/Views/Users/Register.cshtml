@@ -1,0 +1,98 @@
+﻿@model SilviqDancheva_2101321099.ViewModels.Users.RegisterVM
+@using SilviqDancheva_2101321099.Entities
+@{
+    this.Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Register";
+
+}
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Регистрация</h1>
+</div>
+<hr />
+<html>
+<body>
+    <fieldset>
+        <legend> Създаване на профил </legend>
+        <hr />
+        <form action="/Users/Register" method="post">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Username)
+                </div>
+
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Username)
+                </div>
+
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="col-2">
+                    @Html.PasswordFor(m => m.Password)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-1">
+                    @Html.LabelFor(m => m.FirstName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.FirstName)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.LastName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.LastName)
+                </div>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.RoleId)
+                </div>
+                <select asp-for="RoleId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.ListofRole, "Id", "RoleName"))">
+                    <option>Избери Роля</option>
+                </select>
+                <div class="error">
+                    @Html.ValidationMessageFor(m => m.RoleId)
+                </div>
+            </div>
+
+            <div class="row">
+                <div calss="col-2">
+                    <input type="submit" class="right" value="Регистрация" />
+                </div>
+            </div>
+            <div class="row" style="display:flex">
+             Вече имате регистрация? <a href="/Home/Login">Вход</a>
+            </div>
+
+
+        </form>
+    </fieldset>
+    <hr />
+</body>
+</html>
